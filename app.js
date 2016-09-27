@@ -64,26 +64,21 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
   };
   this.generateCookiesPerHour = function(){
     for(var i = 0; i < hours.length - 1; i++){
-      var customersPerHour = Math.round(Math.random() * (maxCustomersPerHour - minCustomersPerHour)) + minCustomersPerHour;
+      var customersPerHour = Math.ceil(Math.random() * (maxCustomersPerHour - minCustomersPerHour)) + minCustomersPerHour;
       this.customersPerHour.push(customersPerHour);
-      var cookiesPerHour = Math.round(avgCookiesPerCustomer * customersPerHour);
+      var cookiesPerHour = Math.ceil(avgCookiesPerCustomer * customersPerHour);
       this.cookiesPerHour.push(cookiesPerHour);
       this.totalCookies += cookiesPerHour;
     }
     this.cookiesPerHour.push(this.totalCookies);
   };
+  this.render();
 }
 
-var firstAndPike = new Restaurant('firstAndPike', 65, 23, 6.3);
-var seaTac = new Restaurant('seaTac', 24, 3, 1.2);
-var seattleCenter = new Restaurant('seattleCenter', 38, 11, 3.7);
-var capitolHill = new Restaurant('capitolHill', 38, 20, 2.3);
-var alki = new Restaurant('alki', 16, 2, 4.6);
-
 createHeaderRow();
-firstAndPike.render();
-seaTac.render();
-seattleCenter.render();
-capitolHill.render();
-alki.render();
+new Restaurant('firstAndPike', 65, 23, 6.3);
+new Restaurant('seaTac', 24, 3, 1.2);
+new Restaurant('seattleCenter', 38, 11, 3.7);
+new Restaurant('capitolHill', 38, 20, 2.3);
+new Restaurant('alki', 16, 2, 4.6);
 createFooterRow();
