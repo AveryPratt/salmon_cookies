@@ -1,175 +1,42 @@
 'use strict';
 
-var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', 'Total'];
 
-var firstAndPike = {
-  container: document.getElementById('firstAndPike'),
-  maxCustomersPerHour: 65,
-  minCustomersPerHour: 23,
-  avgCookiesPerCustomer: 6.3,
+function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPerCustomer) {
+  this.container = document.getElementById(name);
+  this.name = name;
+  this.maxCustomersPerHour = maxCustomersPerHour;
+  this.minCustomersPerHour = minCustomersPerHour;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.customersPerHour = [];
+  this.cookiesPerHour = [];
+  this.totalCookies = 0;
 
-  render: function(){
-    var arr = this.assembleArray();
-    for(var i = 0; i < arr.length; i++){
+  this.render = function(){
+    this.generateCookiesPerHour();
+    for(var i = 0; i < this.cookiesPerHour.length; i++){
       var liEl = document.createElement('li');
-      liEl.textContent = arr[i][0] + ': ' + arr[i][1] + ' cookies';
+      liEl.textContent = hours[i] + ': ' + this.cookiesPerHour[i] + ' cookies';
       this.container.appendChild(liEl);
     }
-  },
-  assembleArray: function(){
-    var totalCookies = 0;
-    var arr = [];
-    for(var i = 0; i < hours.length; i++){
-      arr[i] = this.generateCookiesPerHour(this.generateCustomersPerHour(i));
-      totalCookies += arr[i][1];
+  };
+  this.generateCookiesPerHour = function(){
+    for(var i = 0; i < hours.length - 1; i++){
+      var customersPerHour = Math.round(Math.random() * (maxCustomersPerHour - minCustomersPerHour)) + minCustomersPerHour;
+      this.customersPerHour.push(customersPerHour);
+      var cookiesPerHour = Math.round(avgCookiesPerCustomer * customersPerHour);
+      this.cookiesPerHour.push(cookiesPerHour);
+      this.totalCookies += cookiesPerHour;
     }
-    arr.push(['Total', totalCookies]);
-    return arr;
-  },
-  generateCookiesPerHour: function(arr){
-    arr[1] = Math.round(arr[1] * this.avgCookiesPerCustomer);
-    return arr;
-  },
-  generateCustomersPerHour: function(i){
-    return [hours[i], Math.round(Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour)) + this.minCustomersPerHour];
-  }
+    this.cookiesPerHour.push(this.totalCookies);
+  };
 };
 
-var seaTac = {
-  container: document.getElementById('seaTac'),
-  maxCustomersPerHour: 24,
-  minCustomersPerHour: 3,
-  avgCookiesPerCustomer: 1.2,
-  totalCookies: 0,
-
-  render: function(){
-    var arr = this.assembleArray();
-    for(var i = 0; i < arr.length; i++){
-      var liEl = document.createElement('li');
-      liEl.textContent = arr[i][0] + ': ' + arr[i][1] + ' cookies';
-      this.container.appendChild(liEl);
-    }
-  },
-  assembleArray: function(){
-    var totalCookies = 0;
-    var arr = [];
-    for(var i = 0; i < hours.length; i++){
-      arr[i] = this.generateCookiesPerHour(this.generateCustomersPerHour(i));
-      totalCookies += arr[i][1];
-    }
-    arr.push(['Total', totalCookies]);
-    return arr;
-  },
-  generateCookiesPerHour: function(arr){
-    arr[1] = Math.round(arr[1] * this.avgCookiesPerCustomer);
-    return arr;
-  },
-  generateCustomersPerHour: function(i){
-    return [hours[i], Math.round(Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour)) + this.minCustomersPerHour];
-  }
-};
-
-var seattleCenter = {
-  container: document.getElementById('seattleCenter'),
-  maxCustomersPerHour: 38,
-  minCustomersPerHour: 11,
-  avgCookiesPerCustomer: 3.7,
-  totalCookies: 0,
-
-  render: function(){
-    var arr = this.assembleArray();
-    for(var i = 0; i < arr.length; i++){
-      var liEl = document.createElement('li');
-      liEl.textContent = arr[i][0] + ': ' + arr[i][1] + ' cookies';
-      this.container.appendChild(liEl);
-    }
-  },
-  assembleArray: function(){
-    var totalCookies = 0;
-    var arr = [];
-    for(var i = 0; i < hours.length; i++){
-      arr[i] = this.generateCookiesPerHour(this.generateCustomersPerHour(i));
-      totalCookies += arr[i][1];
-    }
-    arr.push(['Total', totalCookies]);
-    return arr;
-  },
-  generateCookiesPerHour: function(arr){
-    arr[1] = Math.round(arr[1] * this.avgCookiesPerCustomer);
-    return arr;
-  },
-  generateCustomersPerHour: function(i){
-    return [hours[i], Math.round(Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour)) + this.minCustomersPerHour];
-  }
-};
-
-var capitolHill = {
-  container: document.getElementById('capitolHill'),
-  maxCustomersPerHour: 38,
-  minCustomersPerHour: 20,
-  avgCookiesPerCustomer: 2.3,
-  totalCookies: 0,
-
-  render: function(){
-    var arr = this.assembleArray();
-    for(var i = 0; i < arr.length; i++){
-      var liEl = document.createElement('li');
-      liEl.textContent = arr[i][0] + ': ' + arr[i][1] + ' cookies';
-      this.container.appendChild(liEl);
-    }
-  },
-  assembleArray: function(){
-    var totalCookies = 0;
-    var arr = [];
-    for(var i = 0; i < hours.length; i++){
-      arr[i] = this.generateCookiesPerHour(this.generateCustomersPerHour(i));
-      totalCookies += arr[i][1];
-    }
-    arr.push(['Total', totalCookies]);
-    return arr;
-  },
-  generateCookiesPerHour: function(arr){
-    arr[1] = Math.round(arr[1] * this.avgCookiesPerCustomer);
-    return arr;
-  },
-  generateCustomersPerHour: function(i){
-    return [hours[i], Math.round(Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour)) + this.minCustomersPerHour];
-  }
-};
-
-var alki = {
-  container: document.getElementById('alki'),
-  maxCustomersPerHour: 16,
-  minCustomersPerHour: 2,
-  avgCookiesPerCustomer: 4.6,
-  totalCookies: 0,
-
-  render: function(){
-    var arr = this.assembleArray();
-    for(var i = 0; i < arr.length; i++){
-      var liEl = document.createElement('li');
-      liEl.textContent = arr[i][0] + ': ' + arr[i][1] + ' cookies';
-      this.container.appendChild(liEl);
-    }
-  },
-  assembleArray: function(){
-    var totalCookies = 0;
-    var arr = [];
-    for(var i = 0; i < hours.length; i++){
-      arr[i] = this.generateCookiesPerHour(this.generateCustomersPerHour(i));
-      totalCookies += arr[i][1];
-    }
-    arr.push(['Total', totalCookies]);
-    return arr;
-  },
-  generateCookiesPerHour: function(arr){
-    arr[1] = Math.round(arr[1] * this.avgCookiesPerCustomer);
-    return arr;
-  },
-  generateCustomersPerHour: function(i){
-    return [hours[i], Math.round(Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour)) + this.minCustomersPerHour];
-  }
-};
+var firstAndPike = new Restaurant('firstAndPike', 65, 23, 6.3);
+var seaTac = new Restaurant('seaTac', 24, 3, 1.2);
+var seattleCenter = new Restaurant('seattleCenter', 38, 11, 3.7);
+var capitolHill = new Restaurant('capitolHill', 38, 20, 2.3);
+var alki = new Restaurant('alki', 16, 2, 4.6);
 
 firstAndPike.render();
 seaTac.render();
