@@ -1,31 +1,54 @@
 'use strict';
 
-var hours = [['6:00am', 0], ['7:00am', 0], ['8:00am', 0], ['9:00am', 0], ['10:00am', 0], ['11:00am', 0], ['12:00am', 0], ['1:00pm', 0], ['2:00pm', 0], ['3:00pm', 0], ['4:00pm', 0], ['5:00pm', 0], ['6:00pm', 0], ['7:00pm', 0], ['8:00pm', 0], ['Total', 0]];
+var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00am', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm', 'Total'];
+var totals = [];
+for(var i in hours){
+  totals[i] = 0;
+}
+// function createRow(hoursSubIndex, usesHeaders){
+//   var container = document.getElementById('restaurants');
+//   var trEl = document.createElement('tr');
+//   container.appendChild(trEl);
+//   var locationThEl = document.createElement('th');
+//   locationThEl.textContent = 'Location:';
+//   trEl.appendChild(locationThEl);
+//   for(var i = 0; i < hours.length; i++){
+//     var tempEl;
+//     if(usesHeaders){
+//       tempEl = document.createElement('th');
+//     }
+//     else{
+//       tempEl = document.createElement('td');
+//     }
+//     tempEl.textContent = hours[i][hoursSubIndex];
+//     trEl.appendChild(tempEl);
+//   }
+// }
 
 function createHeaderRow(){
   var container = document.getElementById('restaurants');
   var trEl = document.createElement('tr');
-  container.appendChild(trEl);
   var locationThEl = document.createElement('th');
   locationThEl.textContent = 'Location:';
   trEl.appendChild(locationThEl);
   for(var i = 0; i < hours.length; i++){
     var thEl = document.createElement('th');
-    thEl.textContent = hours[i][0] + ':';
+    thEl.textContent = hours[i] + ':';
     trEl.appendChild(thEl);
   }
+  container.appendChild(trEl);
 }
 
 function createFooterRow(){
   var container = document.getElementById('restaurants');
   var trEl = document.createElement('tr');
   container.appendChild(trEl);
-  var totalsThEl = document.createElement('th');
-  totalsThEl.textContent = 'Totals:';
-  trEl.appendChild(totalsThEl);
+  var thEl = document.createElement('th');
+  thEl.textContent = 'Totals:';
+  trEl.appendChild(thEl);
   for(var i = 0; i < hours.length; i++){
     var tdEl = document.createElement('td');
-    tdEl.textContent = hours[i][1];
+    tdEl.textContent = totals[i];
     trEl.appendChild(tdEl);
   }
 }
@@ -57,7 +80,7 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
     this.generateCookiesPerHour();
     for(var i = 0; i < this.cookiesPerHour.length; i++){
       var tdEl = document.createElement('td');
-      hours[i][1] += this.cookiesPerHour[i];
+      totals[i] += this.cookiesPerHour[i];
       tdEl.textContent = this.cookiesPerHour[i];
       row.appendChild(tdEl);
     }
