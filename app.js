@@ -1,36 +1,67 @@
 'use strict';
 
-var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00am', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm', 'Total'];
+var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00am', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', 'Total'];
 var totals = [];
-for(var i in hours) { totals[i] = 0; }
+var allLocations = [];
 
-function createHeaderRow(){
-  var container = document.getElementById('restaurants');
-  var trEl = document.createElement('tr');
-  var locationThEl = document.createElement('th');
-  locationThEl.textContent = 'Location:';
-  trEl.appendChild(locationThEl);
-  for(var i = 0; i < hours.length; i++){
-    var thEl = document.createElement('th');
-    thEl.textContent = hours[i] + ':';
-    trEl.appendChild(thEl);
+// functions for curving the average customers per hour (average daily total remains roughly the same)
+var flat = function(){
+  var multipliers = [];
+  for(var i = 0; i < hours.length - 1; i++){
+    multipliers[i] = 1;
   }
-  container.appendChild(trEl);
-}
+  return multipliers;
+};
 
-function createFooterRow(){
-  var container = document.getElementById('restaurants');
-  var trEl = document.createElement('tr');
-  container.appendChild(trEl);
-  var thEl = document.createElement('th');
-  thEl.textContent = 'Totals:';
-  trEl.appendChild(thEl);
-  for(var i = 0; i < hours.length; i++){
-    var tdEl = document.createElement('td');
-    tdEl.textContent = totals[i];
-    trEl.appendChild(tdEl);
+var simpleCurve = function(){
+  var multipliers = [];
+  for(var i = 0; i < hours.length - 1; i++){
+    var progress = i / (hours.length - 1);
+    if(progress <= .5){
+      multipliers[i] = progress * 2 + .5;
+    }
+    else{
+      multipliers[i] = 2.5 - progress * 2;
+    }
   }
-}
+  return multipliers;
+};
+
+var steepCurve = function(){
+  var multipliers = [];
+  for(var i = 0; i < hours.length - 1; i++){
+    var progress = i / (hours.length - 1);
+    if(progress <= .5){
+      multipliers[i] = progress * 3.6 + .1;
+    }
+    else{
+      multipliers[i] = 3.7 - progress * 3.6;
+    }
+  }
+  return multipliers;
+};
+
+var mealSpikes = function(){
+  var multipliers = [];
+  for(var i = 0; i < hours.length - 1; i++){
+    var progress = i / (hours.length - 1);
+    if((progress >= .4 && progress <= .5) || (progress >= .8 && progress <= .9)){
+      multipliers[i] = 2.5;
+    }
+    else{
+      multipliers[i] = .5;
+    }
+  }
+  return multipliers;
+};
+
+var activeCurve = flat;
+
+new Restaurant('firstAndPike', 10, 23, 6.3, activeCurve);
+new Restaurant('seaTac', 24, 3, 1.2, activeCurve);
+new Restaurant('seattleCenter', 38, 11, 3.7, activeCurve);
+new Restaurant('capitolHill', 38, 20, 2.3, activeCurve);
+new Restaurant('alki', 16, 2, 4.6, activeCurve);
 
 function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPerCustomer, curve) {
   this.container = document.getElementById('restaurants');
@@ -42,6 +73,7 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
   this.cookiesPerHour = [];
   this.totalCookies = 0;
   this.curve = curve;
+  allLocations.push(this);
 
   this.render = function(){
     var row = this.createRow();
@@ -89,66 +121,39 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
     }
     this.cookiesPerHour.push(this.totalCookies);
   };
-  this.render();
 }
 
-// functions for curving the average customers per hour (average daily total remains roughly the same)
-var flat = function(){
-  var multipliers = [];
-  for(var i = 0; i < hours.length - 1; i++){
-    multipliers[i] = 1;
+function createHeaderRow(){
+  var container = document.getElementById('restaurants');
+  var trEl = document.createElement('tr');
+  var locationThEl = document.createElement('th');
+  locationThEl.textContent = 'Location:';
+  trEl.appendChild(locationThEl);
+  for(var i = 0; i < hours.length; i++){
+    var thEl = document.createElement('th');
+    thEl.textContent = hours[i] + ':';
+    trEl.appendChild(thEl);
   }
-  return multipliers;
-};
+  container.appendChild(trEl);
+}
 
-var simpleCurve = function(){
-  var multipliers = [];
-  for(var i = 0; i < hours.length - 1; i++){
-    var progress = i / (hours.length - 2);
-    if(progress <= .5){
-      multipliers[i] = progress * 2 + .5;
-    }
-    else{
-      multipliers[i] = 2.5 - progress * 2;
-    }
+function createFooterRow(){
+  var container = document.getElementById('restaurants');
+  var trEl = document.createElement('tr');
+  container.appendChild(trEl);
+  var thEl = document.createElement('th');
+  thEl.textContent = 'Totals:';
+  trEl.appendChild(thEl);
+  for(var i = 0; i < hours.length; i++){
+    var tdEl = document.createElement('td');
+    tdEl.textContent = totals[i];
+    trEl.appendChild(tdEl);
   }
-  return multipliers;
-};
+}
 
-var steepCurve = function(){
-  var multipliers = [];
-  for(var i = 0; i < hours.length - 1; i++){
-    var progress = i / (hours.length - 2);
-    if(progress <= .5){
-      multipliers[i] = progress * 3.6 + .1;
-    }
-    else{
-      multipliers[i] = 3.7 - progress * 3.6;
-    }
-  }
-  return multipliers;
-};
-
-var mealSpikes = function(){
-  var multipliers = [];
-  for(var i = 0; i < hours.length - 1; i++){
-    var progress = i / (hours.length - 2);
-    if((progress >= .4 && progress <= .5) || (progress >= .8 && progress <= .9)){
-      multipliers[i] = 2.5;
-    }
-    else{
-      multipliers[i] = .5;
-    }
-  }
-  return multipliers;
-};
-
-var activeCurve = flat;
-
+hours.forEach(function(){totals.push(0);});
 createHeaderRow();
-new Restaurant('firstAndPike', 10, 23, 6.3, activeCurve);
-new Restaurant('seaTac', 24, 3, 1.2, activeCurve);
-new Restaurant('seattleCenter', 38, 11, 3.7, activeCurve);
-new Restaurant('capitolHill', 38, 20, 2.3, activeCurve);
-new Restaurant('alki', 16, 2, 4.6, activeCurve);
+for(var i = 0; i < allLocations.length; i++){
+  allLocations[i].render();
+}
 createFooterRow();
