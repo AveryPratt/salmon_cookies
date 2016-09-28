@@ -8,6 +8,24 @@ html, body {
   padding: 0px;
 }
 
+table {
+  display: inline-block;
+  background-color: #ffffff;
+  margin-bottom: 60px;
+}
+
+th, td {
+  padding: 5px;
+}
+
+th {
+  background-color: #99cccc;
+}
+
+th:hover, td:hover {
+  background-color: #99ffff;
+}
+
 ul {
   font-family: verdana;
   display: inline-block;
