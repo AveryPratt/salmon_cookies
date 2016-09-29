@@ -80,6 +80,9 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
       row.appendChild(tdEl);
     }
     var finalTdEl = document.createElement('td');
+    var att = document.createAttribute('class');
+    att.value = 'finalCell';
+    finalTdEl.setAttributeNode(att);
     row.appendChild(finalTdEl);
     this.addEditButton(finalTdEl);
     this.addDeleteButton(finalTdEl);
@@ -231,6 +234,9 @@ function createHeaderRow(){
     trEl.appendChild(thEl);
   }
   var finalThEl = document.createElement('th');
+  var att = document.createAttribute('class');
+  att.value = 'finalCell';
+  finalThEl.setAttributeNode(att);
   trEl.appendChild(finalThEl);
   restaurantsTable.appendChild(trEl);
 }
@@ -245,6 +251,9 @@ function createFooterRow(){
     trEl.appendChild(tdEl);
   }
   var finalTdEl = document.createElement('td');
+  var att = document.createAttribute('class');
+  att.value = 'finalCell';
+  finalTdEl.setAttributeNode(att);
   trEl.appendChild(finalTdEl);
   restaurantsTable.appendChild(trEl);
 }
