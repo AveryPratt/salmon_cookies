@@ -2,29 +2,45 @@
   <head>
     <link href="app.css" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <title>Sales</title>
   </head>
   <body>
     <header>
       <h1>Sales</h1>
     </header>
     <article>
-      <table id="restaurants"></table>
-      <!-- <ul id="firstAndPike">
-        <h2>First and Pike</h2>
-      </ul>
-      <ul id="seaTac">
-        <h2>SeaTac</h2>
-      </ul>
-      <ul id="seattleCenter">
-        <h2>Seattle Center</h2>
-      </ul>
-      <ul id="capitolHill">
-        <h2>Capitol Hill</h2>
-      </ul>
-      <ul id="alki">
-        <h2>Alki</h2>
-      </ul> -->
+      <table id="restaurantsTable"></table>
     </article>
+    <aside>
+      <form id="createLocationForm">
+        <fieldset>
+          <legend>Add Location</legend>
+
+          <label for="locationName">Name of Location: </label>
+          <input name="locationName" type="text"></input>
+
+          <label for="minCustomersPerHour">Minimum Customers per Hour: </label>
+          <input name="minCustomersPerHour" type="text"></input>
+
+          <label for="maxCustomersPerHour">Maximum Customers per Hour: </label>
+          <input name="maxCustomersPerHour" type="text"></input>
+
+          <label for="avgCookiesPerCustomer">Average Cookies per Customer: </label>
+          <input name="avgCookiesPerCustomer" type="text"></input>
+
+          <label for="funcDropDownList">Data Curve Function: </label>
+          <select name="funcDropDownList">
+            <option>Active Curve</option>
+            <option>Shallow Curve</option>
+            <option>Steep Curve</option>
+            <option>Meal Spikes</option>
+            <option>No Curve</option>
+          </select>
+
+          <button type="submit">Create Location</button>
+        </fieldset>
+      </form>
+    </aside>
     <nav>
       <a href="index.html">Main Site</a>
     </nav>

@@ -12,6 +12,7 @@ table {
   display: inline-block;
   background-color: #ffffff;
   margin-bottom: 60px;
+  empty-cells: show;
 }
 
 th, td {
@@ -24,6 +25,14 @@ th {
 
 th:hover, td:hover {
   background-color: #99ffff;
+}
+
+td.finalCell:hover {
+  background-color: inherit;
+}
+
+th.finalCell:hover {
+  background-color: #99cccc;
 }
 
 ul {
@@ -74,7 +83,7 @@ nav {
 }
 
 a {
-  color: #99ffff;
+  color: #000099;
   font-size: 25px;
   font-family: helvetica, cursive;
   font-weight: bold;
@@ -83,4 +92,63 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+fieldset {
+  background-color: #99ff99;
+  border: 2px solid #ffffff;
+  max-width: 500px;
+  display: inline-block;
+}
+
+legend {
+  background-color: inherit;
+  border: 1px solid #ffffff;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+label {
+  float: left;
+  width: 50%;
+  text-align: right;
+  background-color: inherit;
+}
+
+input {
+  width: 200px;
+  background-color: #ffffff;
+  margin-bottom: 5px;
+}
+
+select {
+  width: 200px;
+  background-color: #ffffff;
+  margin-bottom: 5px;
+}
+
+option {
+  background-color: #ffffff;
+}
+
+fieldset button {
+  background-color: #ccffcc;
+  border: 3px solid #009900;
+  clear: both;
+}
+
+fieldset button:hover {
+  background-color: #66ff66;
+}
+
+button {
+  background-color: #ccccff;
+  border: 3px solid #000099;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+button:hover {
+  background-color: #6666ff;
 }
