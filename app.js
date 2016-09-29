@@ -15,7 +15,6 @@ var flat = function(){
   }
   return multipliers;
 };
-
 var simpleCurve = function(){
   var multipliers = [];
   for(var i = 0; i < hours.length - 1; i++){
@@ -29,7 +28,6 @@ var simpleCurve = function(){
   }
   return multipliers;
 };
-
 var steepCurve = function(){
   var multipliers = [];
   for(var i = 0; i < hours.length - 1; i++){
@@ -43,7 +41,6 @@ var steepCurve = function(){
   }
   return multipliers;
 };
-
 var mealSpikes = function(){
   var multipliers = [];
   for(var i = 0; i < hours.length - 1; i++){
@@ -57,9 +54,9 @@ var mealSpikes = function(){
   }
   return multipliers;
 };
-
 var activeCurve = flat;
 
+// constructors
 function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPerCustomer, curve) {
   this.name = name;
   this.maxCustomersPerHour = maxCustomersPerHour;
@@ -82,17 +79,48 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
       tdEl.textContent = this.cookiesPerHour[i];
       row.appendChild(tdEl);
     }
+    var finalTdEl = document.createElement('td');
+    row.appendChild(finalTdEl);
+    this.addEditButton(finalTdEl);
+    this.addDeleteButton(finalTdEl);
   };
-
+  this.addEditButton = function(container){
+    var editButtonEl = document.createElement('button');
+    editButtonEl.textContent = 'edit';
+    // var editIdAtt = document.createAttribute('id');
+    // editIdAtt.value = this.name + 'Edit';
+    // editButtonEl.setAttributeNode(editIdAtt);
+    var typeAtt = document.createAttribute('type');
+    typeAtt.value = 'submit';
+    editButtonEl.setAttributeNode(typeAtt);
+    // var editClass = document.createAttribute('class');
+    // editClass.value = 'editButton';
+    // editButtonEl.setAttributeNode(editClass);
+    container.appendChild(editButtonEl);
+  };
+  this.addDeleteButton = function(container){
+    var deleteButtonEl = document.createElement('button');
+    deleteButtonEl.textContent = 'delete';
+    // var deleteIdAtt = document.createAttribute('id');
+    // deleteIdAtt.value = this.name + 'Delete';
+    // deleteButtonEl.setAttributeNode(deleteIdAtt);
+    var typeAtt = document.createAttribute('type');
+    typeAtt.value = 'submit';
+    deleteButtonEl.setAttributeNode(typeAtt);
+    // var deleteClass = document.createAttribute('class');
+    // deleteClass.value = 'deleteButton';
+    // deleteButtonEl.setAttributeNode(deleteClass);
+    container.appendChild(deleteButtonEl);
+  };
   this.createRow = function(){
     var trEl = document.createElement('tr');
+    trEl.addEventListener('submit', removeLocation);
     var att = document.createAttribute('id');
     att.value = this.name;
     trEl.setAttributeNode(att);
     restaurantsTable.appendChild(trEl);
     return trEl;
   };
-
   // this.generateCookiesPerHour = function(){
   //   var multipliers = curve();
   //   for(var i = 0; i < hours.length - 1; i++){
@@ -104,7 +132,6 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
   //   }
   //   this.cookiesPerHour.push(this.totalCookies);
   // };
-
   this.generateCookiesPerHour = function(){
     this.totalCookies = 0;
     var multipliers = curve();
@@ -117,25 +144,23 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
     }
     this.cookiesPerHour[hours.length - 1] = this.totalCookies;
   };
-
   allLocations.push(this);
 }
 
+// functions
 function renderDefaultLocations(){
   clearAllLocations();
-  new Restaurant('firstAndPike', 10, 23, 6.3, activeCurve);
-  new Restaurant('seaTac', 24, 3, 1.2, activeCurve);
-  new Restaurant('seattleCenter', 38, 11, 3.7, activeCurve);
-  new Restaurant('capitolHill', 38, 20, 2.3, activeCurve);
-  new Restaurant('alki', 16, 2, 4.6, activeCurve);
+  new Restaurant('First and Pike', 10, 23, 6.3, activeCurve);
+  new Restaurant('SeaTac', 24, 3, 1.2, activeCurve);
+  new Restaurant('Seattle Center', 38, 11, 3.7, activeCurve);
+  new Restaurant('Capitol Hill', 38, 20, 2.3, activeCurve);
+  new Restaurant('Alki', 16, 2, 4.6, activeCurve);
   renderAllLocations();
 }
-
 function clearAllLocations(){
   allLocations = [];
   renderAllLocations();
 }
-
 function renderAllLocations(){
   restaurantsTable.innerHTML = '';
 
@@ -145,14 +170,13 @@ function renderAllLocations(){
   }
   createFooterRow();
 }
-
-function handleLocationSubmit(event){
+function addLocation(event){
   event.preventDefault();
 
   var ableToAdd = true;
   var name = event.target.locationName.value;
   var maxCustomersPerHour = parseInt(event.target.maxCustomersPerHour.value);
-  var minCustomersPerHour = parseInt(event .target.minCustomersPerHour.value);
+  var minCustomersPerHour = parseInt(event.target.minCustomersPerHour.value);
   var avgCookiesPerCustomer = parseInt(event.target.avgCookiesPerCustomer.value);
   var curve;
   switch(event.target.funcDropDownList.value){
@@ -174,28 +198,28 @@ function handleLocationSubmit(event){
     alert('You must enter a name of the location');
     ableToAdd = false;
   }
-
   if(typeof minCustomersPerHour !== 'number'){
     alert('You must enter a valid number for Minimum Customers per Hour.');
     ableToAdd = false;
   }
-
   if(typeof maxCustomersPerHour !== 'number'){
     alert('You must enter a valid number for Maximum Customers per Hour.');
     ableToAdd = false;
   }
-
   if(typeof avgCookiesPerCustomer !== 'number'){
     alert('You must enter a valid number for Average Cookies per Customer.');
     ableToAdd = false;
   }
-
   if(ableToAdd){
     new Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPerCustomer, curve);
   }
   renderAllLocations();
 }
-
+function removeLocation(event){
+  event.preventDefault();
+  console.log('it worked... sorta');
+  restaurantsTable.removeChild(event.target);
+}
 function createHeaderRow(){
   var trEl = document.createElement('tr');
   var locationThEl = document.createElement('th');
@@ -206,9 +230,10 @@ function createHeaderRow(){
     thEl.textContent = hours[i] + ':';
     trEl.appendChild(thEl);
   }
+  var finalThEl = document.createElement('th');
+  trEl.appendChild(finalThEl);
   restaurantsTable.appendChild(trEl);
 }
-
 function createFooterRow(){
   var trEl = document.createElement('tr');
   var totalsThEl = document.createElement('th');
@@ -219,10 +244,13 @@ function createFooterRow(){
     tdEl.textContent = totals[i];
     trEl.appendChild(tdEl);
   }
+  var finalTdEl = document.createElement('td');
+  trEl.appendChild(finalTdEl);
   restaurantsTable.appendChild(trEl);
 }
 
-createLocationForm.addEventListener('submit', handleLocationSubmit);
+// event listeners
+createLocationForm.addEventListener('submit', addLocation);
 
 hours.forEach(function(){totals.push(0);});
 renderDefaultLocations();
