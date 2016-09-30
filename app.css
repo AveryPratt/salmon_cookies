@@ -159,3 +159,16 @@ button:hover {
   background-color: #6666cc;
   font-weight: bold;
 }
+
+p, em {
+  font-size: 12px;
+  background-color: inherit;
+}
+
+passed {
+  color: #00ff00;
+}
+
+failed {
+  color: #ff0000;
+}

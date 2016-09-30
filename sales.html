@@ -19,10 +19,10 @@
           <label for="locationName">Name of Location: </label>
           <input id="locationNameInput" name="locationName" type="text"></input>
 
-          <label for="minCustomersPerHour">Minimum Customers per Hour: </label>
+          <label for="minCustomersPerHour">*Minimum Customers per Hour: </label>
           <input id="minCustomersPerHourInput" name="minCustomersPerHour" type="text"></input>
 
-          <label for="maxCustomersPerHour">Maximum Customers per Hour: </label>
+          <label for="maxCustomersPerHour">*Maximum Customers per Hour: </label>
           <input id="maxCustomersPerHourInput" name="maxCustomersPerHour" type="text"></input>
 
           <label for="avgCookiesPerCustomer">Average Cookies per Customer: </label>
@@ -30,14 +30,15 @@
 
           <label for="funcDropDownList">Data Curve Function: </label>
           <select id="funcDropDownList" name="funcDropDownList">
-            <option>Active Curve</option>
+            <option>No Curve</option>
             <option>Shallow Curve</option>
             <option>Steep Curve</option>
             <option>Meal Spikes</option>
-            <option>No Curve</option>
           </select>
+          <p><em>*Minimum and Maximum values are only accurate when there is no curve function active</em></p>
 
           <button id="submitButton" type="submit">Create</button>
+          <button id="cancelButton" type="submit">Cancel</button>
         </fieldset>
       </form>
     </aside>
