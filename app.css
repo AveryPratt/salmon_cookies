@@ -1,11 +1,16 @@
 * {
 text-align: center;
-background-color: #9999ff;
 }
 
-html, body {
+html {
   margin: 0px;
   padding: 0px;
+  background-color: #99ff99;
+}
+
+body {
+  background-color: #9999ff;
+  margin: 0px 15%;
 }
 
 table {
@@ -58,7 +63,7 @@ h2 {
 img {
   background-color: inherit;
   max-width: 400px;
-  padding: 60px;
+  padding: 20px;
 }
 
 div {
@@ -66,7 +71,7 @@ div {
   display: inline-block;
   width: 600px;
   border: 10px solid #99ffff;
-  margin: 20px 200px;
+  margin: 20px 0px;
 }
 
 div:hover, ul:hover {
@@ -88,6 +93,7 @@ a {
   font-family: helvetica, cursive;
   font-weight: bold;
   text-decoration: none;
+  margin: 0px 10px;
 }
 
 a:hover {
@@ -160,7 +166,7 @@ button:hover {
   font-weight: bold;
 }
 
-p, em {
+em {
   font-size: 12px;
   background-color: inherit;
 }
