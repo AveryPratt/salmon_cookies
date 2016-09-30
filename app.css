@@ -160,7 +160,7 @@ button:hover {
   font-weight: bold;
 }
 
-p, em {
+em {
   font-size: 12px;
   background-color: inherit;
 }

@@ -127,9 +127,20 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
     restaurantsTable.appendChild(trEl);
     return trEl;
   };
+  // this.generateCookiesPerHour = function(){
+  //   var multipliers = this.curve.func();
+  //   for(var i = 0; i < hours.length - 1; i++){
+  //     var customersPerHour = Number((multipliers[i]).toFixed(2));
+  //     this.customersPerHour.push(customersPerHour);
+  //     var cookiesPerHour = customersPerHour;
+  //     this.cookiesPerHour.push(cookiesPerHour);
+  //     this.totalCookies += cookiesPerHour;
+  //   }
+  //   this.cookiesPerHour.push(this.totalCookies);
+  // };
   this.generateCookiesPerHour = function(){
     this.totalCookies = 0;
-    var multipliers = curve();
+    var multipliers = curve.func();
     for(var i = 0; i < hours.length - 1; i++){
       var customersPerHour = (Math.ceil(Math.random() * (maxCustomersPerHour - minCustomersPerHour)) + minCustomersPerHour) * multipliers[i];
       this.customersPerHour[i] = customersPerHour;
