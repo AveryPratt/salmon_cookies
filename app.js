@@ -128,28 +128,17 @@ function Restaurant(name, maxCustomersPerHour, minCustomersPerHour, avgCookiesPe
     return trEl;
   };
   this.generateCookiesPerHour = function(){
-    var multipliers = this.curve.func();
+    this.totalCookies = 0;
+    var multipliers = curve();
     for(var i = 0; i < hours.length - 1; i++){
-      var customersPerHour = Number((multipliers[i]).toFixed(2));
-      this.customersPerHour.push(customersPerHour);
-      var cookiesPerHour = customersPerHour;
-      this.cookiesPerHour.push(cookiesPerHour);
+      var customersPerHour = (Math.ceil(Math.random() * (maxCustomersPerHour - minCustomersPerHour)) + minCustomersPerHour) * multipliers[i];
+      this.customersPerHour[i] = customersPerHour;
+      var cookiesPerHour = Math.ceil(avgCookiesPerCustomer * customersPerHour);
+      this.cookiesPerHour[i] = cookiesPerHour;
       this.totalCookies += cookiesPerHour;
     }
-    this.cookiesPerHour.push(this.totalCookies);
+    this.cookiesPerHour[hours.length - 1] = this.totalCookies;
   };
-  // this.generateCookiesPerHour = function(){
-  //   this.totalCookies = 0;
-  //   var multipliers = curve();
-  //   for(var i = 0; i < hours.length - 1; i++){
-  //     var customersPerHour = (Math.ceil(Math.random() * (maxCustomersPerHour - minCustomersPerHour)) + minCustomersPerHour) * multipliers[i];
-  //     this.customersPerHour[i] = customersPerHour;
-  //     var cookiesPerHour = Math.ceil(avgCookiesPerCustomer * customersPerHour);
-  //     this.cookiesPerHour[i] = cookiesPerHour;
-  //     this.totalCookies += cookiesPerHour;
-  //   }
-  //   this.cookiesPerHour[hours.length - 1] = this.totalCookies;
-  // };
   allLocations.push(this);
 }
 function Curve(name, func){
