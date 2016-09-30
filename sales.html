@@ -14,22 +14,22 @@
     <aside>
       <form id="createLocationForm">
         <fieldset>
-          <legend>Add Location</legend>
+          <legend id="legend">Add Location</legend>
 
           <label for="locationName">Name of Location: </label>
-          <input name="locationName" type="text"></input>
+          <input id="locationNameInput" name="locationName" type="text"></input>
 
           <label for="minCustomersPerHour">Minimum Customers per Hour: </label>
-          <input name="minCustomersPerHour" type="text"></input>
+          <input id="minCustomersPerHourInput" name="minCustomersPerHour" type="text"></input>
 
           <label for="maxCustomersPerHour">Maximum Customers per Hour: </label>
-          <input name="maxCustomersPerHour" type="text"></input>
+          <input id="maxCustomersPerHourInput" name="maxCustomersPerHour" type="text"></input>
 
           <label for="avgCookiesPerCustomer">Average Cookies per Customer: </label>
-          <input name="avgCookiesPerCustomer" type="text"></input>
+          <input id="avgCookiesPerCustomerInput" name="avgCookiesPerCustomer" type="text"></input>
 
           <label for="funcDropDownList">Data Curve Function: </label>
-          <select name="funcDropDownList">
+          <select id="funcDropDownList" name="funcDropDownList">
             <option>Active Curve</option>
             <option>Shallow Curve</option>
             <option>Steep Curve</option>
@@ -37,7 +37,7 @@
             <option>No Curve</option>
           </select>
 
-          <button type="submit">Create Location</button>
+          <button id="submitButton" type="submit">Create</button>
         </fieldset>
       </form>
     </aside>
