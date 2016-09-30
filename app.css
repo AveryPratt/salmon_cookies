@@ -102,7 +102,7 @@ fieldset {
 }
 
 legend {
-  background-color: inherit;
+  background-color: #66cc66;
   border: 1px solid #ffffff;
   display: block;
   font-size: 20px;
@@ -120,6 +120,7 @@ input {
   width: 200px;
   background-color: #ffffff;
   margin-bottom: 5px;
+  text-align: left;
 }
 
 select {
@@ -139,7 +140,7 @@ fieldset button {
 }
 
 fieldset button:hover {
-  background-color: #66ff66;
+  background-color: #66cc66;
 }
 
 button {
@@ -147,8 +148,27 @@ button {
   border: 3px solid #000099;
   border-radius: 20px;
   padding: 5px 10px;
+  width: 80px;
+}
+
+button.editButton {
+  margin-right: 5px;
 }
 
 button:hover {
-  background-color: #6666ff;
+  background-color: #6666cc;
+  font-weight: bold;
+}
+
+p, em {
+  font-size: 12px;
+  background-color: inherit;
+}
+
+passed {
+  color: #00ff00;
+}
+
+failed {
+  color: #ff0000;
 }
